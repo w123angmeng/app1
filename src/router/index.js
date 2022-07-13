@@ -18,6 +18,11 @@ const routes = [
     // ]
   },
   {
+    path: "/outpNurseUniversalPrint",
+    name: "outpNurseUniversalPrint",
+    component: () =>import("../views/index.vue")
+  },
+  {
     path: "/demo1",
     name: "demo1",
     component: () =>import("../views/demo1.vue")
