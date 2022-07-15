@@ -45,8 +45,8 @@ if (!window.__POWERED_BY_QIANKUN__) {
   render();
 }
 
-export async function bootstrap() {
-  console.log('app1 [vue] vue app bootstraped');
+export async function bootstrap(props = {}) {
+  console.log('app1 [vue] vue app bootstraped', props);
 }
 export async function mount(props) {
   console.log('app1 [vue] props from main framework', props);

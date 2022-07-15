@@ -4,6 +4,8 @@ const { name } = require('./package');
     module.exports = {
         transpileDependencies: true,
         devServer: {
+            port: 8081,
+            host: "localhost",
           headers: {
             'Access-Control-Allow-Origin': '*',
           },
@@ -15,5 +17,5 @@ const { name } = require('./package');
             // jsonpFunction: `webpackJsonp_${name}`,
             chunkLoadingGlobal: `webpackJsonp_${name}`,
           },
-        },
+        }
       };
