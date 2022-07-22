@@ -1,0 +1,9 @@
+{
+  "items": [{
+    "label_value": "1",
+    "label_name": "名字帅"
+  }],
+  "status": "success",
+  "code": 200,
+  "name": "photo"
+}

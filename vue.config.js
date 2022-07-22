@@ -9,6 +9,11 @@ const { name } = require('./package');
           headers: {
             'Access-Control-Allow-Origin': '*',
           },
+          proxy: {
+            '/outpNurse': {
+                target: 'http://localhost:8081',
+            }
+          }
         },
         configureWebpack: {
           output: {

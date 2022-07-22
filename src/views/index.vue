@@ -493,6 +493,20 @@ export default {
                 this.searchList();
             });
         },
+        formatDate(date) {
+    const year = date.getFullYear()
+                const month = date.getMonth() + 1
+                const day = date.getDate()
+                // const hour = date.getHours()
+                // const minute = date.getMinutes()
+                // const second = date.getSeconds()
+                return [year, month, day]
+                    .map(n => {
+                        n = n.toString()
+                        return n[1] ? n : '0' + n
+                    })
+                    .join('-')
+},
         // 分页导航
         handleCurrentChange(val) {
             this.visitParams.pageIndex = val;
@@ -724,6 +738,7 @@ export default {
             this.$axios
                 .post("/outpnurse/visit/pageNurseVisitIn", this.visitParams)
                 .then((res) => {
+                    console.log("res: getVisitedList", res)
                     if (res.success) {
                         this.tableData = res.data.records;
                         this.total = res.data.count;
@@ -735,6 +750,15 @@ export default {
                         this.$message.warning(res.message);
                     }
                 });
+        },
+        //分页数
+        hisPageSizes(count, pageSize = 10) {
+            let pagesList = []
+            let frequency = parseInt(count / pageSize) + 1
+            for (let i = 1; i <= frequency; i++) {
+                pagesList.push(pageSize * i)
+            }
+            return pagesList
         },
         //清空数据
         clearParams() {

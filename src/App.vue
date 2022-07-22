@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app1">
     <!-- <h1>this is app1</h1>
     <nav>
       <router-link to="/">Home</router-link> |
