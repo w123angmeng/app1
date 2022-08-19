@@ -4,12 +4,13 @@ module.exports = {
     node: true,
   },
   extends: [
-    "plugin:vue/essential",
-    "eslint:recommended",
-    "plugin:prettier/recommended",
+    // "plugin:vue/essential",
+    // "eslint:recommended",
+    // "plugin:prettier/recommended",
   ],
   parserOptions: {
     parser: "@babel/eslint-parser",
+    sourceType: 'module'
   },
   rules: {
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",

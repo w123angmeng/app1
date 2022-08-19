@@ -3,6 +3,14 @@
         <div class="contentHeader">
             <div class="headerTitle">
                 <p>患者列表</p>
+                <span>{{patientInfo ? `${patientInfo.name}-${patientInfo.sex}-${patientInfo.age}` : ''}}</span>
+                <el-button
+                        type="plain"
+                        @click="changePatient"
+                        class="searchList"
+                        size="medium"
+                        >切换患者</el-button
+                    >
             </div>
             <div class="searchHandlerWrap">
                 <div>
@@ -61,7 +69,7 @@
                         @focus="docnameFocus"
                     ></el-autocomplete>
                     <span class="labelTitle">就诊日期</span>
-                    <el-date-picker
+                    <!-- <el-date-picker
                         v-model="beginAndendTime"
                         type="daterange"
                         align="right"
@@ -73,7 +81,7 @@
                         value-format="yyyy-MM-dd"
                         start-placeholder="开始日期"
                         end-placeholder="结束日期"
-                    ></el-date-picker>
+                    ></el-date-picker> -->
                     <el-radio-group
                         v-model="visitParams.accepted"
                         class="statusGroup"
@@ -290,6 +298,8 @@
             :modelForm="infusionCardForm"
         >
         </InfusionCard> -->
+        <!-- 公共组件 -->
+    <CommonDialog :dialogData="dialogData" @handleClose="handleClose"></CommonDialog>
     </div>
 </template>
 <script>
@@ -304,10 +314,15 @@
 // import FeeAdditional from "@/components/page/OutPatient_WEB/receivePatient/feeAdditional/feeAdditional.vue"; //费用补录
 // import RefundDetail from "@/components/page/OutPatient_WEB/receivePatient/refundDetail/refundDetail"; //退费申请
 // import { mixins } from "./comp/reportConfig";
+import {mapState, mapMutations} from "vuex";
 export default {
     // mixins: [mixins],
     data() {
         return {
+            dialogData: {
+                visible: false,
+                content: "这是app1-调用公共组件"
+            },
             docReceiveDetailedVisible: false,
             idVisit: "", //就诊id
             printDialogVisible: false, //打印弹窗
@@ -416,6 +431,7 @@ export default {
         // FeeAdditional,
         // RefundDetail,
         // InfusionCard,
+        CommonDialog: () => import('lib_remote/CommonDialog'),
     },
     // computed: {
     //     isAtmeng() {
@@ -439,9 +455,27 @@ export default {
     // },
     created() {},
     mounted() {
-        this.getSystemTime(); //获取系统时间
+        // this.getSystemTime(); //获取系统时间
+    },
+    computed: {
+        ...mapState({
+            patientInfo: state => state.patient.patientInfo
+        }),
     },
     methods: {
+        handleClose(data) {
+        console.log("app1 子组件监听到弹窗关闭", data)
+        },
+        ...mapMutations({
+            setPatientInfo: "patient/setPatientInfo",
+        }),
+        changePatient() {
+            this.setPatientInfo({
+                name: '子组件-姓名',
+                age: '11岁',
+                sex: '男'
+            })
+        },
         // 按钮是否可点击
         btnIsDisabled(row) {
             return row.sdVisitStatus == this.CONSTANT.NOT_CLOSE_VISIT_STATUS ? true : false
@@ -829,14 +863,14 @@ export default {
             });
             return false;
         },
-        handleClose() {
-            //更新地址栏参数
-            this.$router.push({
-                query: {},
-            });
-            sessionStorage.removeItem("receivePatientParams");
-            this.docReceiveDetailedVisible = false;
-        },
+        // handleClose() {
+        //     //更新地址栏参数
+        //     this.$router.push({
+        //         query: {},
+        //     });
+        //     sessionStorage.removeItem("receivePatientParams");
+        //     this.docReceiveDetailedVisible = false;
+        // },
     },
     destroyed() {
         sessionStorage.removeItem("idVisitRecordParams");
